@@ -1,6 +1,7 @@
 import geopandas as gpd
 from pathlib import Path
 import pandas as pd
+from datetime import datetime 
 
 ISO_DIR = Path("isochrones")
 OUT_FILE = Path("isochrones_stacked.geojson")
@@ -17,7 +18,10 @@ for f in files:
     gdf = gpd.read_file(f)
 
     time_str = f.stem.split("_")[-1]
-    gdf["time_of_day"] = int(time_str)
+
+    # Add back datetime. Whoops. 
+    time = datetime(2025, 12, 16, int(time_str))
+    gdf["time_of_day"] = time
 
     gdfs.append(gdf)
 
